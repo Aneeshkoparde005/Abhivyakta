@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ब्रेल कीबोर्ड</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        #hindiOutput {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            min-height: 40px;
+        }
+
+        textarea {
+            width: 80%;
+            margin-bottom: 20px;
+            font-size: 16px;
+            min-height: 80px;
+            resize: vertical;
+            text-align: center;
+        }
+
+        .braille-keyboard {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            grid-template-rows: repeat(2, 60px);
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .braille-cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+            height: 60px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            cursor: pointer;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .braille-cell.active {
+            background-color: #d0f0c0;
+        }
+
+        #errorOutput {
+            color: red;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <textarea id="brailleInput" placeholder="ब्रेल में टाइप करें"></textarea>
+        <div id="hindiOutput">हिंदी टेक्स्ट यहाँ दिखाई देगा</div>
+        <div id="errorOutput"></div>
+        <div class="braille-keyboard">
+            <!-- Braille cells with numbers 1 to 6 -->
+            <div class="braille-cell" data-dot="1">⠁</div>
+            <div class="braille-cell" data-dot="2">⠂</div>
+            <div class="braille-cell" data-dot="3">⠄</div>
+            <div class="braille-cell" data-dot="4">⠈</div>
+            <div class="braille-cell" data-dot="5">⠐</div>
+            <div class="braille-cell" data-dot="6">⠆</div>
+        </div>
+        <button id="clearBtn">Clear</button>
+        <button id="submitBtn">Submit</button>
+    </div>
+    <script>
+        const brailleToHindi = {
+            "1": "अ", // Braille dot 1
+            "12": "आ", // Braille dots 1-2
+            "14": "इ", // Braille dots 1-4
+            "124": "ई", // Braille dots 1-2-4
+            "15": "उ", // Braille dots 1-5
+            "125": "ऊ", // Braille dots 1-2-5
+            "24": "ए", // Braille dots 2-4
+            "245": "ऐ", // Braille dots 2-4-5
+            "26": "ओ", // Braille dots 2-6
+            "246": "औ", // Braille dots 2-4-6
+            // Add more mappings as needed
+        };
+
+        const textarea = document.getElementById('brailleInput');
+        const hindiOutput = document.getElementById('hindiOutput');
+        const errorOutput = document.getElementById('errorOutput');
+        const clearBtn = document.getElementById('clearBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const brailleCells = document.querySelectorAll('.braille-cell');
+
+        let activeDots = '';
+
+        function updateHindiOutput() {
+            const hindiChar = brailleToHindi[activeDots];
+            if (hindiChar) {
+                hindiOutput.textContent = hindiChar;
+                errorOutput.textContent = ''; // Clear error message if valid
+            } else {
+                hindiOutput.textContent = 'अज्ञात पैटर्न'; // "Unknown Pattern"
+                errorOutput.textContent = 'अज्ञात ब्रेल पैटर्न'; // "Unknown Braille Pattern"
+            }
+        }
+
+        function convertBrailleToHindi() {
+            const brailleInput = textarea.value.trim();
+            const braillePatterns = brailleInput.split(' ').filter(Boolean);
+            let translatedText = '';
+
+            braillePatterns.forEach(pattern => {
+                const hindiChar = brailleToHindi[pattern];
+                translatedText += hindiChar ? hindiChar : '?'; // '?' for unknown Braille patterns
+            });
+
+            hindiOutput.textContent = translatedText;
+            errorOutput.textContent = translatedText.includes('?') ? 'कुछ पैटर्न ज्ञात नहीं हैं' : ''; // "Some patterns are unknown"
+        }
+
+        brailleCells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                const dot = cell.getAttribute('data-dot');
+                if (activeDots.includes(dot)) {
+                    activeDots = activeDots.replace(dot, '');
+                    cell.classList.remove('active');
+                } else {
+                    activeDots += dot;
+                    cell.classList.add('active');
+                }
+                activeDots = Array.from(new Set(activeDots.split('').sort())).join('');
+                updateHindiOutput();
+            });
+        });
+
+        clearBtn.addEventListener('click', () => {
+            activeDots = '';
+            brailleCells.forEach(cell => cell.classList.remove('active'));
+            textarea.value = '';
+            hindiOutput.textContent = 'हिंदी टेक्स्ट यहाँ दिखाई देगा';
+            errorOutput.textContent = '';
+        });
+
+        submitBtn.addEventListener('click', () => {
+            textarea.value += activeDots + ' ';
+            convertBrailleToHindi();
+            activeDots = '';
+            brailleCells.forEach(cell => cell.classList.remove('active'));
+        });
+    </script>
+</body>
+</html>

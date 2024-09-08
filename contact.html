@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacts</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* The Popup Form */
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+*{
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+
+-webkit-focus-ring-color: rgba(255, 255, 255, 0);
+        }
+        
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+}
+
+.container {
+  width: 100%;
+  /* max-width: 400px; */
+  margin: 0 auto;
+  /* padding: 20px; */
+}
+
+.header {
+  background-color: #f8b328;
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 24px;
+  color: #333;
+  font-weight: 800;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.search-bar input {
+    width: 70%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #333333;
+    border: 3px solid #f8b328;
+    color: #f8b328;
+}
+
+.search-bar .search-btn {
+  background-color: #333;
+  color: #f8b328;
+  border: 3px solid #f8b328;
+  border: none;
+  padding: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+button.search-btn{
+    border-radius: 50%;
+    border: 3px solid #f8b328;
+}
+.search-bar input::placeholder {
+  /* background-color: #161515; */
+  color: #f8b328;
+  border: none;
+  padding: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    align-items: center;
+    gap: 1vh;
+}
+
+.buttons button {
+    background-color: #f8b328;
+    border: none;
+    padding: 10px;
+    width: 10vh;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    color: #333333;
+    font-weight: 800;
+    font-size: 12px;
+}
+
+.go-btn {
+  background-color: #333;
+  color: white;
+  width: 10%;
+}
+
+.contact-list {
+  margin-top: 20px;
+}
+
+.group-header {
+  font-weight: bold;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+  text-align: left;
+  padding-left: 10px;
+  color: #f8b328;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  border-bottom: 1px solid #ccc;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #333333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 10px;
+    color: #f8b328;
+    border: 3px solid #f8b328;
+}
+
+.name {
+  flex: 1;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.fav {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.add-contact {
+  margin-top: 20px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
+
+.add-btn {
+    background-color: #333;
+    color: #f8b328;
+    font-size: 50px;
+    border: none;
+    border-radius: 50%;
+    padding: 6px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border: 3px solid #f8b328;
+}
+
+.form-popup {
+    width: 80%;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9;
+  background-color: #fff;
+  border: 2px solid #f8b328;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+  max-width: 300px;
+}
+
+.form-container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-container .btn {
+  background-color: #f8b328;
+  color: white;
+  padding: 10px;
+  border: none;
+  width: 30%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-container .cancel {
+  background-color: #333;
+}
+
+.form-container .btn:hover {
+  opacity: 0.9;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>CONTACTS</h1>
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search name" id="searchInput">
+      <button class="search-btn" style="border: 3px solid #f8b328;">
+        <span><img src="allicons/search.png" alt="" style="width: 3vh;"></span>
+      </button>
+    </div>
+
+    <div class="buttons">
+      <button>Groups</button>
+      <button>Favourite</button>
+      <button>ADD</button>
+      <img src="allicons/more2.png" alt="" style="width: 3vh;">
+    </div>
+
+    <div class="contact-list" id="contactList">
+      <div class="group-header">A</div>
+      <div class="contact">
+        <div class="icon">A</div>
+        <div class="name">AUSER1</div>
+        <div class="fav" onclick="toggleFav(this)">♡</div>
+      </div>
+      <div class="contact">
+        <div class="icon">A</div>
+        <div class="name">AUSER2</div>
+        <div class="fav" onclick="toggleFav(this)">💛</div>
+      </div>
+      <div class="contact">
+        <div class="icon">A</div>
+        <div class="name">AUSER3</div>
+        <div class="fav" onclick="toggleFav(this)">♡</div>
+      </div>
+
+      <div class="group-header">B</div>
+      <div class="contact">
+        <div class="icon">B</div>
+        <div class="name">BUSER1</div>
+        <div class="fav" onclick="toggleFav(this)">♡</div>
+      </div>
+      <div class="contact">
+        <div class="icon">B</div>
+        <div class="name">BUSER2</div>
+        <div class="fav" onclick="toggleFav(this)">♡</div>
+      </div>
+      <div class="contact">
+        <div class="icon">B</div>
+        <div class="name">BUSER3</div>
+        <div class="fav" onclick="toggleFav(this)">♡</div>
+      </div>
+
+      <div class="group-header">C</div>
+      <div class="contact">
+        <div class="icon">C</div>
+        <div class="name">CUSER1</div>
+        <div class="fav" onclick="toggleFav(this)">♡</div>
+      </div>
+    </div>
+
+    <!-- Add New Contact Button -->
+    <div class="add-contact">
+      <button class="add-btn" onclick="openForm()">+</button>
+    </div>
+  </div>
+
+  <!-- Popup Form -->
+  <div id="contactForm" class="form-popup">
+    <div class="form-container">
+      <h2>Add Contact</h2>
+      <label for="contactName"><b>Name</b></label>
+      <input type="text" placeholder="Enter Name" id="contactName" required>
+
+      <label for="contactLetter"><b>Group Letter</b></label>
+      <input type="text" placeholder="Enter First Letter" id="contactLetter" maxlength="1" required>
+
+      <button type="button" class="btn" onclick="addContact()">Add</button>
+      <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Open the form popup
+function openForm() {
+  document.getElementById("contactForm").style.display = "block";
+}
+
+// Close the form popup
+function closeForm() {
+  document.getElementById("contactForm").style.display = "none";
+}
+
+// Add a new contact
+function addContact() {
+  const name = document.getElementById("contactName").value.trim();
+  const letter = document.getElementById("contactLetter").value.trim().toUpperCase();
+
+  if (!name || !letter) {
+    alert("Please enter both name and group letter.");
+    return;
+  }
+
+  const contactList = document.getElementById("contactList");
+  
+  // Check if group header exists, else create it
+  let groupHeader = document.querySelector(`.group-header[data-letter='${letter}']`);
+  
+  if (!groupHeader) {
+    groupHeader = document.createElement("div");
+    groupHeader.classList.add("group-header");
+    groupHeader.setAttribute("data-letter", letter);
+    groupHeader.innerText = letter;
+    
+    // Find where to insert the new group alphabetically
+    const existingHeaders = document.querySelectorAll('.group-header');
+    let inserted = false;
+    existingHeaders.forEach(header => {
+      if (header.getAttribute('data-letter') > letter && !inserted) {
+        contactList.insertBefore(groupHeader, header);
+        inserted = true;
+      }
+    });
+
+    if (!inserted) {
+      contactList.appendChild(groupHeader);
+    }
+  }
+
+  // Create the new contact
+  const contactDiv = document.createElement("div");
+  contactDiv.classList.add("contact");
+
+  const iconDiv = document.createElement("div");
+  iconDiv.classList.add("icon");
+  iconDiv.innerText = letter;
+
+  const nameDiv = document.createElement("div");
+  nameDiv.classList.add("name");
+  nameDiv.innerText = name;
+
+  const favDiv = document.createElement("div");
+  favDiv.classList.add("fav");
+  favDiv.innerHTML = '♡';
+  favDiv.setAttribute("onclick", "toggleFav(this)");
+
+  // Append the elements
+  contactDiv.appendChild(iconDiv);
+  contactDiv.appendChild(nameDiv);
+  contactDiv.appendChild(favDiv);
+
+  // Insert the contact alphabetically
+  let inserted = false;
+  const contactsInGroup = document.querySelectorAll(`.group-header[data-letter='${letter}'] + .contact`);
+  contactsInGroup.forEach(contact => {
+    if (contact.querySelector('.name').innerText > name && !inserted) {
+      contactList.insertBefore(contactDiv, contact);
+      inserted = true;
+    }
+  });
+
+  if (!inserted) {
+    groupHeader.parentNode.insertBefore(contactDiv, groupHeader.nextSibling);
+  }
+
+  // Close the form
+  closeForm();
+  
+  // Reset the form fields
+  document.getElementById("contactName").value = '';
+  document.getElementById("contactLetter").value = '';
+}
+
+// Toggle favorite icon between heart and empty heart
+function toggleFav(element) {
+  if (element.innerText === '♡') {
+    element.innerText = '💛';
+  } else {
+    element.innerText = '♡';
+  }
+}
+
+  </script>
+</body>
+</html>

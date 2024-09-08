@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translator App</title>
+    <style>
+
+        *{
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+
+-webkit-focus-ring-color: rgba(255, 255, 255, 0);
+        }
+        html, body {
+            width: 100%;
+            /* height: 100%; */
+            /* margin: 0; */
+            /* padding: 0; */
+            background-color: #ffffff;
+            font-family: sans-serif;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+        .container {
+    border: 2px solid black;
+    border-radius: 20px;
+    width: 99%;
+    height: 99vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+        .container-in {
+            border: 2px solid black;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            width: 100%;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header {
+            width: 100%;
+            /* padding: px; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-arrow {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .language-select {
+            width: 80%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 1px 5px  black;
+        }
+
+        .language-dropdown {
+            width: 41%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #e4d036;
+            background-color: #323232;
+        }
+
+        .language-dropdown:focus {
+            outline: none;
+        }
+
+        .play-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .play-button svg {
+            width: 20px;
+            height: 20px;
+            fill: #333;
+        }
+
+        .input-area {
+            width: 75%;
+            height: 200px;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            box-shadow: 0px 1px 5px  black;
+        }
+
+        .audio-waveform {
+            width: 100%;
+            height: 40px;
+            background-color: #eee;
+            border-radius: 10px;
+            margin-top: 10px;
+            background-image: url(audiowave.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .input-text {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+            background-color: transparent;
+        }
+
+        .input-text:focus {
+            outline: none;
+        }
+
+        .input-buttons {
+            width: 86%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .button {
+            width: 10vh;
+            height: 10vh;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000000;
+            background-color: #dec242;
+            cursor: pointer;
+            box-shadow: 0px 1px 5px  black;
+        }
+        .button:active {
+            width: 10vh;
+            height: 10vh;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #dec242;
+            background-color: black;
+            cursor: pointer;
+            box-shadow: 0px 1px 5px  black;
+            transition: 0.3s;
+        }
+
+        .button:focus {
+            outline: none;
+        }
+
+        .footer {
+            width: 100%;
+            /* padding: 20px; */
+            height: 10vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .footer-icon {
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="container-in" style="background: #f9cb09;">
+        <div class="header">
+            <!-- <span class="back-arrow">&larr;</span> -->
+            <span class="title"><img src="logo/nobg-logocrop.png" alt="" style="width: 20vh;"></span>
+        </div>
+        <div class="language-select">
+            <select class="language-dropdown">
+                <option value="Italian">Italian</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Marathi">Marathi</option>
+                <option value="Gujarati">Gujarati</option>
+                <option value="Bengali">Bengali</option>
+                <option value="Bengali">speech</option>
+            </select>
+            <button class="play-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play-circle">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="10 8 16 12 10 16"></polygon>
+                </svg>
+            </button>
+            <select class="language-dropdown">
+                <option value="English">English</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Marathi">Marathi</option>
+                <option value="Gujarati">Gujarati</option>
+                <option value="Bengali">Bengali</option>
+                <option value="Bengali">text</option>
+            </select>
+        </div>
+        <div class="input-area">
+            <button class="audio-waveform"></button>
+            <textarea class="input-text" placeholder="Enter text here..."></textarea>
+        </div>
+        <div class="input-buttons">
+            <button class="button">Write</button>
+            <button class="button">Record</button>
+            <button class="button">Scan</button>
+        </div>
+    </div>
+        <div class="footer">
+            <span class="footer-icon"><img src="home.png" alt="" style="width: 4vh;"></span>
+            <span class="footer-icon"><a href="dial.html"><img src="phone.png" alt="" style="width: 3.8vh;"></a></span>
+            <span class="footer-icon"><a href="contact.html"><img src="contacts.png" alt="" style="width: 3.8vh;"></a></span>
+        </div>
+    </div>
+</body>
+</html>

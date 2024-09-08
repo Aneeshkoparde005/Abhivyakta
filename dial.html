@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dial Pad</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+
+-webkit-focus-ring-color: rgba(255, 255, 255, 0);
+        }
+
+        
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .dialer-container {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dialer-upper {
+            background-color: #fff;
+            padding: 50px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            text-align: center;
+            /* position: relative; Position relative for absolute positioning inside */
+            flex: 2;
+        }
+
+        .speak-icon {
+            background-color: #ffffff;
+            border-radius: 50%;
+            padding: 8px;
+            position: absolute; /* Position absolute within the .dialer-upper container */
+            top: 20px; /* Adjust this value as needed */
+            left: 20px; /* Adjust this value as needed */
+        }
+
+        .speak-icon img {
+            width: 7vh;
+        }
+
+        .dialer-upper #dialer-number {
+            font-size: 1.5rem;
+            margin-left: 10px;
+            top: 20px;
+            vertical-align: middle;
+            position: relative;
+            font-weight: 700;
+        }
+
+        .dialer-upper button {
+            background-color: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            float: right;
+            position: relative;
+            top: 20px;
+            font-weight: 700;
+        }
+
+        .contact-options {
+            margin-top: 10vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-options button {
+            background: none;
+            border: none;
+            color: black;
+            font-size: 1.3rem;
+            text-align: left;
+            cursor: pointer;
+            margin-bottom: 10px;
+            display: flex;
+    justify-content: start;
+    align-items: center;
+    font-weight: 500;
+        }
+
+        .dialer-lower {
+            background-color: #3a3a3a;
+            padding: 20px;
+            border-top-left-radius: 10%;
+            border-top-right-radius: 10%;
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            box-shadow: 0px -10px 5px 10px #747474;
+        }
+
+        .dialpad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            justify-items: center;
+            align-content: center;
+        }
+
+        .dialpad button {
+            background-color: #f5a623;
+    border: none;
+    border-radius: 50%;
+    /* padding: 20px; */
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: rgb(39, 39, 39);
+    cursor: pointer;
+    width: 8vh;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+        }
+
+        .dialpad button:active {
+            background-color: rgb(39, 39, 39);
+            border: none;
+            border-radius: 50%;
+            padding: 20px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #f5a623;
+            cursor: pointer;
+            width: 8vh;
+            height: 8vh;
+        }
+
+        /* .dialpad button:active {
+            background-color: #e59400;
+        } */
+
+        .dial-action {
+            display: flex;
+            justify-content: center;
+            /* padding: 3vh; */
+            gap: 3vh;
+        }
+
+        .dial-action button {
+            background-color: #48464400;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            cursor: pointer;
+        }
+
+        .dial-action button img {
+            width: 24px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .modal-header .close {
+            background-color: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            margin-top: 10px;
+        }
+
+        .modal-body input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .modal-footer button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f5a623;
+            color: white;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .modal-footer button:hover {
+            background-color: #e59400;
+        }
+    </style>
+</head>
+<body>
+    <div class="dialer-container">
+        <!-- White background section -->
+        <div class="dialer-upper">
+            <div class="speak-icon">
+                <img src="allicons/speak.png" />
+            </div>
+            <span id="dialer-number"></span>
+            <button onclick="clearInput()">X</button>
+
+            <div class="contact-options">
+                <button onclick="openNewContactModal()"><img src="allicons/addnew.png" alt="" style="width: 2vh;margin-right: 2vh;"> New contact</button>
+                <button onclick="addExistingContact()"><img src="allicons/existing.png" alt="" style="width: 2vh;margin-right: 2vh;">Add to existing contact</button>
+            </div>
+        </div>
+
+        <!-- Dark background section for the numpad -->
+        <div class="dialer-lower">
+            <div class="dialpad">
+                <button onclick="appendNumber('1')">1</button>
+                <button onclick="appendNumber('2')">2</button>
+                <button onclick="appendNumber('3')">3</button>
+                <button onclick="appendNumber('4')">4</button>
+                <button onclick="appendNumber('5')">5</button>
+                <button onclick="appendNumber('6')">6</button>
+                <button onclick="appendNumber('7')">7</button>
+                <button onclick="appendNumber('8')">8</button>
+                <button onclick="appendNumber('9')">9</button>
+                <button onclick="appendNumber('*')">*</button>
+                <button onclick="appendNumber('0')">0</button>
+                <button onclick="appendNumber('#')">#</button>
+            </div>
+
+            <div class="dial-action">
+                <button onclick="goBack()">
+                    <img src="allicons/back2.png" style="width: 6vh;"/>
+                </button>
+                <button onclick="makeCall()">
+                    <img src="allicons/calling2.png" style="width: 9vh;"/>
+                </button>
+                <button onclick="clearInput()">
+                    <img src="allicons/remove2.png" style="width: 6vh;"/>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Contact Modal -->
+    <div id="newContactModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>New Contact</h2>
+                <button class="close" onclick="closeNewContactModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="contact-name" placeholder="Name" required>
+                <input type="text" id="contact-phone" placeholder="Phone Number" required>
+                <input type="email" id="contact-email" placeholder="Email (optional)">
+            </div>
+            <div class="modal-footer">
+                <button onclick="saveContact()">Save</button>
+                <button onclick="closeNewContactModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function appendNumber(number) {
+            const dialerNumber = document.getElementById('dialer-number');
+            dialerNumber.textContent += number;
+        }
+
+        function clearInput() {
+            const dialerNumber = document.getElementById('dialer-number');
+            dialerNumber.textContent = '';
+        }
+
+        function goBack() {
+            alert("Going back...");
+        }
+
+        function makeCall() {
+            const dialerNumber = document.getElementById('dialer-number').textContent;
+            if (dialerNumber) {
+                window.location.href = `tel:${dialerNumber}`;
+            }
+        }
+
+        function addExistingContact() {
+            alert('Adding to existing contact...');
+        }
+
+        // Modal functionality
+        function openNewContactModal() {
+            document.getElementById('newContactModal').style.display = 'flex';
+        }
+
+        function closeNewContactModal() {
+            document.getElementById('newContactModal').style.display = 'none';
+        }
+
+        function saveContact() {
+            const name = document.getElementById('contact-name').value;
+            const phone = document.getElementById('contact-phone').value;
+            const email = document.getElementById('contact-email').value;
+
+            if (name && phone) {
+                alert(`New contact saved!\nName: ${name}\nPhone: ${phone}\nEmail: ${email}`);
+                closeNewContactModal();
+            } else {
+                alert("Please fill in the required fields.");
+            }
+        }
+    </script>
+</body>
+</html>
